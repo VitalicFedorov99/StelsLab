@@ -78,7 +78,12 @@ public class Player : MonoBehaviour
 
     private void LogicAttack()
     {
+        RaycastHit hit;
 
+        if (Physics.Raycast(transform.position, Vector3.forward, out hit, 10f)) 
+        {
+            Debug.LogError(hit.collider.name);
+        }
     }
 
     private void LogicCast() 
@@ -87,6 +92,10 @@ public class Player : MonoBehaviour
     }
 
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, Vector3.forward);
+    }
 }
 
 
