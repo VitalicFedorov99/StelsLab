@@ -11,7 +11,7 @@ public class AnimatorPlayer : MonoBehaviour
     private string MOVE = "Move";
     private string ATTACK = "Attack";
     private string CAST = "Cast";
-
+   
 
 
     public void Crouch(bool flag)
@@ -33,6 +33,7 @@ public class AnimatorPlayer : MonoBehaviour
     {
         _animator.SetTrigger(CAST);
     }
+
 
     public void EndFight()
     {

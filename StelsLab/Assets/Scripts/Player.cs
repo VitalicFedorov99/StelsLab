@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class Player : MonoBehaviour
 {
     [SerializeField] private bool _isCrouch = false;
     [SerializeField] private float _speed;
     [SerializeField] private float _speedRotate;
     [SerializeField] private StatePlayer _state = StatePlayer.Stay;
+
     private AnimatorPlayer _animPlayer;
     private Rigidbody _rg;
 
@@ -25,6 +26,8 @@ public class Player : MonoBehaviour
         _animPlayer.Crouch(_isCrouch);
     }
 
+   
+
 
 
     public void Move(float vertical, float horizontale)
@@ -40,10 +43,13 @@ public class Player : MonoBehaviour
         }
 
         _animPlayer.Move(speedFlag);
-        
-        
-        transform.Translate(0, 0, translation);
-        transform.Rotate(0, rotation, 0);
+
+        //_meshAgent.SetDestination(new Vector3(0, 0, translation));
+        if (_state == StatePlayer.Stay)
+        {
+            transform.Translate(0, 0, translation);
+            transform.Rotate(0, rotation, 0);
+        }
     }
 
 
@@ -53,7 +59,6 @@ public class Player : MonoBehaviour
         {
             _state = StatePlayer.Cast;
             _animPlayer.Cast();
-            LogicCast();
         }
     }
     public void Attack()
@@ -62,12 +67,19 @@ public class Player : MonoBehaviour
         {
             _state = StatePlayer.Attack;
             _animPlayer.Attack();
-            LogicAttack();
         }
     }
 
     public void EndAction()
     {
+        if(_state == StatePlayer.Attack)
+        {
+            LogicAttack();
+        }
+        if (_state == StatePlayer.Cast)
+        {
+            LogicCast();
+        }
         _state = StatePlayer.Stay;
     }
     private void Start()
@@ -80,9 +92,13 @@ public class Player : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position, Vector3.forward, out hit, 10f)) 
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5f)) 
         {
             Debug.LogError(hit.collider.name);
+            if(hit.collider.TryGetComponent(out CarSignal car))
+            {
+                car.Signal();
+            }
         }
     }
 
@@ -94,7 +110,8 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, Vector3.forward);
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.TransformDirection(Vector3.forward)*5f);
     }
 }
 

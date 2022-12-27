@@ -34,6 +34,7 @@ public class PlayerInput : MonoBehaviour
         {
             _player.Cast();
         }
+
         _player.Move(Input.GetAxis("Vertical"), Input.GetAxis("Horizontal"));
        
     }
@@ -41,36 +42,15 @@ public class PlayerInput : MonoBehaviour
     void FixedUpdate()
     {
         
-        m_HitDetect = Physics.BoxCast(m_Collider.bounds.center, transform.localScale, transform.forward, out m_Hit, transform.rotation, m_MaxDistance);
+     /*   m_HitDetect = Physics.BoxCast(m_Collider.bounds.center, transform.localScale, transform.forward, out m_Hit, transform.rotation, m_MaxDistance);
         if (m_HitDetect)
         {
           
             Debug.Log("Hit : " + m_Hit.collider.name);
         }
-        
+        */
 
     }
 
     
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-
-      
-        if (m_HitDetect)
-        {
-            //Draw a Ray forward from GameObject toward the hit
-            Gizmos.DrawRay(transform.position, transform.forward * m_Hit.distance);
-            //Draw a cube that extends to where the hit exists
-            Gizmos.DrawWireCube(transform.position + transform.forward * m_Hit.distance, transform.localScale);
-        }
-        //If there hasn't been a hit yet, draw the ray at the maximum distance
-       /* else
-        {
-            //Draw a Ray forward from GameObject toward the maximum distance
-            Gizmos.DrawRay(transform.position, transform.forward * m_MaxDistance);
-            //Draw a cube at the maximum distance
-            Gizmos.DrawWireCube(transform.position + transform.forward * m_MaxDistance, transform.localScale);
-        }*/
-    }
 }
