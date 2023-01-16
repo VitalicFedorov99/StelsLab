@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using DG.Tweening;
-public class RobotEnemy : MonoBehaviour
+public class RobotEnemy : MonoBehaviour, IImpact
 {
 
     [SerializeField] private Transform[] _patrolPoints;
@@ -33,7 +33,7 @@ public class RobotEnemy : MonoBehaviour
     private NavMeshAgent _agent;
     private Tween _twenn;
 
-
+    public TypeObjectImpact TypeObj => TypeObjectImpact.Enemy;
 
     public void EndAction()
     {
@@ -45,10 +45,14 @@ public class RobotEnemy : MonoBehaviour
         {
             _enemyState = EnemyState.Patrol;
         }
-        //StartCoroutine(CoroutuneWait(_timeWait));
     }
 
     public void Stan()
+    {
+        StartCoroutine(CoroutuneWait(_timeStan));
+    }
+
+    public void Impact()
     {
         StartCoroutine(CoroutuneWait(_timeStan));
     }
@@ -88,7 +92,6 @@ public class RobotEnemy : MonoBehaviour
         transform.LookAt(_patrolPoints[currentId].position);
         _animEnemy.Move(true);
         _animEnemy.Run(false);
-        Debug.Log(Vector3.Distance(transform.position, _patrolPoints[currentId].position));
         if (Vector3.Distance(transform.position, _patrolPoints[currentId].position) < 1.5f)
         {
             currentId++;
@@ -135,7 +138,6 @@ public class RobotEnemy : MonoBehaviour
         _animEnemy.Attack();
         _animEnemy.Move(false);
         _animEnemy.Run(false);
-       // StartCoroutine(CoroutineCoolDown());
     }
 
 
@@ -175,6 +177,7 @@ public class RobotEnemy : MonoBehaviour
         _isObserv = false;
     }
 
+   
 }
 
 
