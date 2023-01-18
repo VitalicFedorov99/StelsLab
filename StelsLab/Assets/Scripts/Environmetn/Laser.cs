@@ -13,13 +13,17 @@ public class Laser : MonoBehaviour, IImpact
 
     public void Impact()
     {
+
         Work();
+        Debug.Log(_isWork);
     }
 
     public void Work()
     {
         _isWork = !_isWork;
-        if (_isWork)
+        _laser.SetActive(_isWork);
+        _light.color = _isWork ? Color.red : Color.green;
+       /* if (_isWork)
         {
             _laser.SetActive(_isWork);
             _light.color = Color.red;
@@ -28,6 +32,6 @@ public class Laser : MonoBehaviour, IImpact
         {
             _laser.SetActive(_isWork);
             _light.color = Color.green;
-        }
+        }*/
     }
 }

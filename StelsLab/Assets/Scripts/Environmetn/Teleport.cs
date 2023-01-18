@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour
 {
-
+    [SerializeField] private GameObject _vrPlayer;
     [SerializeField] private GameObject _door;
     [SerializeField] private GameObject _place;
     [SerializeField] private bool _isWork;
@@ -22,15 +22,22 @@ public class Teleport : MonoBehaviour
 
     public void Work()
     {
-        
+
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out Player player)) 
+        if (other.TryGetComponent(out Player player))
         {
             player.transform.position = _place.transform.position;
         }
+        if (other.TryGetComponent(out Hand hand))
+        {
+            _vrPlayer.transform.position = _place.transform.position;
+        }
+
     }
+
+
 }

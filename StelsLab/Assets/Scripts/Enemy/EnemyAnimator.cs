@@ -35,6 +35,5 @@ public class EnemyAnimator : MonoBehaviour
     public void EndAction()
     {
         _robot.EndAction();
-        Debug.Log("Выключился");
     }
 }
