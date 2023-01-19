@@ -35,6 +35,6 @@ public class CarSignal : MonoBehaviour,IImpact
         _light.gameObject.SetActive(false);
     }
 
-
+    
 
 }

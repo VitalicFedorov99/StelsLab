@@ -13,5 +13,6 @@ public enum TypeObjectImpact
 {
     Enemy,
     PC,
-    Car
+    Car,
+    Energy
 }

@@ -4,6 +4,30 @@ using UnityEngine;
 
 public class Hand : MonoBehaviour
 {
+    public EnergyPlayer energyPlayer;
+    public float damage;
+    public bool IsEnergy=false;
+
+    public GameObject Energy;
+
+
+
+
+    public void OnHand()
+    {
+
+        if (energyPlayer.Energy == energyPlayer.MaxEnergy)
+        {
+            Energy.SetActive(true);
+            IsEnergy = true;
+        }
+    }
+
+    public void Test()
+    {
+        Debug.Log("Test");
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out IImpact impact))
@@ -12,13 +36,23 @@ public class Hand : MonoBehaviour
             impact.Impact();
         }
 
-       /* if (other.TryGetComponent(out Laser laser))
+        if(other.TryGetComponent(out CollectEnergy energy))
         {
-            laser.Impact();
+            energyPlayer.UpdateEnergy(energy.Energy);
+            Destroy(energy.gameObject);
         }
-        if(other.TryGetComponent(out CarSignal carSignal))
+
+        
+        if (IsEnergy)
         {
-               
-        }*/
+            if (other.TryGetComponent(out RobotEnemy robot))
+            {
+                Debug.LogError("Ѕью по нему");
+                robot.Damage(damage);
+            }
+        }
     }
+
+
+
 }

@@ -20,8 +20,9 @@ public class RobotEnemy : MonoBehaviour, IImpact
     [SerializeField] private float _anger;
     [SerializeField] private float _maxAnger;
     [SerializeField] private Image _image;
+    [SerializeField] private float _health;
+    [SerializeField] private float _startHealth;
 
-    
 
     [SerializeField] private Sprite _stanImage;
     [SerializeField] private Sprite _ImageAnger;
@@ -37,6 +38,10 @@ public class RobotEnemy : MonoBehaviour, IImpact
 
     public void EndAction()
     {
+        if (_target.TryGetComponent(out EnergyPlayer player))
+        {
+            player.Damage(1);
+        }
         if (Vector3.Distance(transform.position, _target.transform.position) < 2f)
         {
             Attack();
@@ -46,6 +51,17 @@ public class RobotEnemy : MonoBehaviour, IImpact
             _enemyState = EnemyState.Patrol;
         }
     }
+    public void Damage(float damage)
+    {
+        Debug.LogError("ай бьют");
+        _health -= damage;
+        _image.fillAmount = _health / _startHealth;
+        if (_health < 0)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     public void Stan()
     {
@@ -77,11 +93,11 @@ public class RobotEnemy : MonoBehaviour, IImpact
             Attack();
         }
 
-        if(!_isObserv)
-        if(Vector3.Distance(transform.position, _player.transform.position) < 5f)
-        {
-            StartCoroutine(CoroutineObserve());
-        }
+        if (!_isObserv)
+            if (Vector3.Distance(transform.position, _player.transform.position) < 5f)
+            {
+                StartCoroutine(CoroutineObserve());
+            }
     }
 
     private void Patrol()
@@ -100,15 +116,20 @@ public class RobotEnemy : MonoBehaviour, IImpact
                 currentId = 0;
             }
         }
-        
+
     }
     private void OnTriggerStay(Collider other)
     {
-        if (_target == null)
-            if (other.TryGetComponent(out Player player))
-            {
-                _image.DOColor(Color.red, 1f);
-            }
+        if (_target != null)
+            return;
+        if (other.TryGetComponent(out Player player))
+        {
+            _image.DOColor(Color.red, 1f);
+        }
+        if (other.TryGetComponent(out Hand hand))
+        {
+            _image.DOColor(Color.red, 1f);
+        }
     }
 
     private void Run()
@@ -177,7 +198,7 @@ public class RobotEnemy : MonoBehaviour, IImpact
         _isObserv = false;
     }
 
-   
+
 }
 
 

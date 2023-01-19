@@ -1,0 +1,54 @@
+{
+    "name": "VRTest",
+    "maps": [
+        {
+            "name": "TestVR",
+            "id": "4b81611a-5c01-4e34-893a-47c738d6cfd5",
+            "actions": [
+                {
+                    "name": "OnHandRight",
+                    "type": "Button",
+                    "id": "88d048ea-8a6d-4ea8-84d2-85edd0ee30da",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OnHandLeft",
+                    "type": "Button",
+                    "id": "3d5d3603-dc35-4015-a7a3-fa7e145d52e7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c7b611b7-00c0-4f31-ac74-578a7d47b9f7",
+                    "path": "<XRController>{RightHand}/triggerButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnHandRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8ea014e-35e6-48ad-aac2-cc769f19e040",
+                    "path": "<XRController>{LeftHand}/triggerButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OnHandLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
